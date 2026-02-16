@@ -150,7 +150,7 @@ export default function CleaningBusinessApp() {
 
   // ハッシュタグ生成
   const generateHashtags = (season: string, purpose: string) => {
-    const baseTags = ['#エアコンクリーニング', '#長野県', '#ワークスS'];
+    const baseTags = ['#エアコンクリーニング', '#長野県', '#リバースエア'];
     
     const seasonTags: Record<string, string[]> = {
       spring: ['#春のエアコンクリーニング', '#早期予約'],
@@ -331,7 +331,7 @@ ${hashtags.join(' ')}
       const systemPrompt = `あなたはエアコンクリーニング業を営む40代自営業パパ「篠原翔吾」のThreads投稿を作成する専門家です。
 
 # 事業者プロフィール
-- 会社名: ワークス-S（ワークスエス）
+- 会社名: リバースエア
 - 代表: 篠原翔吾（40代）
 - 家族構成: 奥さんと子ども1人
 - 対応エリア: 長野県全域（北信・北信州を除く）
@@ -461,7 +461,7 @@ JSONフォーマットで返してください：
           <div className="flex justify-center items-center gap-3 mb-4">
             <Wind className="w-10 h-10 text-blue-500" />
             <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-sky-600 bg-clip-text text-transparent">
-              ワークス-S
+              リバースエア
             </h1>
           </div>
           <p className="text-lg text-gray-600 mb-2">エアコンクリーニング専用</p>
