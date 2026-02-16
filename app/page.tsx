@@ -105,7 +105,7 @@ export default function CleaningBusinessApp() {
       purpose,
       tone,
       posts,
-      hashtags: generateHashtags(season, purpose)
+      hashtags: generateTopics(season, purpose)
     };
     const updated = [newHistory, ...postHistory].slice(0, 50);
     setPostHistory(updated);
@@ -148,32 +148,32 @@ export default function CleaningBusinessApp() {
     { id: 'gratitude', label: '感謝', emoji: '🙏', desc: 'お客様への感謝' }
   ];
 
-  // ハッシュタグ生成
-  const generateHashtags = (season: string, purpose: string) => {
-    const baseTags = ['#エアコンクリーニング', '#長野県', '#リバースエア'];
+  // トピック生成
+  const generateTopics = (season: string, purpose: string) => {
+    const baseTopics = ['エアコンクリーニング', '長野県', 'リバースエア'];
     
-    const seasonTags: Record<string, string[]> = {
-      spring: ['#春のエアコンクリーニング', '#早期予約'],
-      summer: ['#夏本番', '#エアコン快適'],
-      autumn: ['#秋のメンテナンス', '#暖房前クリーニング'],
-      winter: ['#冬のエアコン', '#暖房シーズン']
+    const seasonTopics: Record<string, string[]> = {
+      spring: ['春のメンテナンス', '早期予約キャンペーン'],
+      summer: ['夏の快適生活', 'エアコン清掃'],
+      autumn: ['秋の準備', '暖房前クリーニング'],
+      winter: ['冬の暖房対策', 'エアコンメンテナンス']
     };
     
-    const purposeTags: Record<string, string[]> = {
-      booking: ['#予約受付中', '#お早めに'],
-      trust: ['#地域密着', '#信頼'],
-      local: ['#長野で生まれ育った', '#地元愛'],
-      value: ['#個人事業主', '#顔が見える'],
-      service: ['#プロの技術', '#新品のような風']
+    const purposeTopics: Record<string, string[]> = {
+      booking: ['予約受付中', '早めのご予約'],
+      trust: ['地域密着サービス', '信頼と実績'],
+      local: ['長野で生まれ育った', '地元密着'],
+      value: ['個人事業主の強み', '顔が見える安心'],
+      service: ['プロの技術', '丁寧な仕上がり']
     };
     
-    const locationTags = ['#長野市', '#松本市', '#上田市', '#諏訪市'];
+    const locationTopics = ['長野市', '松本市', '上田市', '諏訪市'];
     
     return [
-      ...baseTags,
-      ...(seasonTags[season] || []),
-      ...(purposeTags[purpose] || []),
-      ...locationTags.slice(0, 2)
+      ...baseTopics,
+      ...(seasonTopics[season] || []),
+      ...(purposeTopics[purpose] || []),
+      ...locationTopics.slice(0, 2)
     ];
   };
 
@@ -243,7 +243,7 @@ export default function CleaningBusinessApp() {
       post: post.text,
       date,
       time,
-      hashtags: generateHashtags(selectedSeason, selectedPurpose),
+      hashtags: generateTopics(selectedSeason, selectedPurpose),
       season: selectedSeason,
       purpose: selectedPurpose,
       tone: selectedTone
@@ -272,13 +272,13 @@ export default function CleaningBusinessApp() {
       return;
     }
 
-    const hashtags = generateHashtags(selectedSeason, selectedPurpose);
+    const topics = generateTopics(selectedSeason, selectedPurpose);
     const content = generatedPosts.map((post, index) => {
       return `【パターン ${index + 1}】
 ${post.text}
 
-推奨ハッシュタグ:
-${hashtags.join(' ')}
+推奨トピック:
+${topics.join(', ')}
 
 文字数: ${post.text.length}文字
 ━━━━━━━━━━━━━━━━━━━━
@@ -403,9 +403,7 @@ JSONフォーマットで返してください：
 
   const copyToClipboard = async (text: string, index: number) => {
     try {
-      const hashtags = generateHashtags(selectedSeason, selectedPurpose);
-      const fullText = `${text}\n\n${hashtags.join(' ')}`;
-      await navigator.clipboard.writeText(fullText);
+      await navigator.clipboard.writeText(text);
       setCopiedIndex(index);
       setTimeout(() => setCopiedIndex(null), 2000);
     } catch (err) {
@@ -782,20 +780,20 @@ JSONフォーマットで返してください：
               </button>
             </div>
 
-            {/* Hashtag Suggestions */}
+            {/* Topic Suggestions */}
             <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 shadow-lg">
               <h3 className="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
                 <Hash className="w-5 h-5 text-purple-500" />
-                推奨ハッシュタグ
+                推奨トピック
               </h3>
               <div className="flex flex-wrap gap-2">
-                {generateHashtags(selectedSeason, selectedPurpose).map((tag, i) => (
+                {generateTopics(selectedSeason, selectedPurpose).map((topic, i) => (
                   <span key={i} className="px-3 py-1 bg-white text-purple-700 rounded-full text-sm font-medium shadow-sm">
-                    {tag}
+                    {topic}
                   </span>
                 ))}
               </div>
-              <p className="text-xs text-gray-600 mt-3">※ コピー時に自動で含まれます</p>
+              <p className="text-xs text-gray-600 mt-3">※ Threadsでは投稿時にトピックとして追加できます</p>
             </div>
 
             {generatedPosts.map((post, index) => (
